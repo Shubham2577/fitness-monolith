@@ -3,9 +3,12 @@ package com.project.fitness.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
@@ -17,7 +20,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Builder
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -30,14 +33,17 @@ public class Activity {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "json")
-    private Map<String,Object> additionalMatrics;
+    private Map<String,Object> additionalMetrics;
 
     @Enumerated(EnumType.STRING)
     private ActivityType type;
     private Integer duration;
-    private Integer caloriesburned;
-    private Integer startTime;
+    private Integer caloriesBurned;
+    private LocalDateTime startTime;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
 
